@@ -55,7 +55,7 @@ function App() {
       ) : (
         <div className="flex justify-center items-center h-screen">
           <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 className="text-2xl font-bold mb-6">Login for buttmon</h2>
+            <h2 className="text-2xl font-bold mb-6">Login </h2>
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
