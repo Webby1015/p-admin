@@ -5,7 +5,7 @@ import Terms from "./Pages/Terms";
 import Policy from "./Pages/Policy";
 import Error from "./Pages/Error";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./config/firebase";
+import { auth } from "./firebase";
 
 // Remove the import for vite-plugin-env-compatible
 // No need to import it here
