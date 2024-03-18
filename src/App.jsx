@@ -18,7 +18,6 @@ function App() {
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth.currentUser.email);
       setIsLoggedIn(true);
     } catch (error) {
       console.error(error);
@@ -71,7 +70,6 @@ function App() {
                 onChange={(event) => {
                   setEmail(event.target.value);
                   // Access the environment variable directly
-                  console.log(import.meta.env.REACT_APP_API_KEY);
                 }}
               />
             </div>
