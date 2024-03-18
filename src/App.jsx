@@ -7,6 +7,9 @@ import Error from "./Pages/Error";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./config/firebase";
 
+// Remove the import for vite-plugin-env-compatible
+// No need to import it here
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
@@ -65,7 +68,11 @@ function App() {
                 id="username"
                 type="text"
                 placeholder="Enter your username"
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  // Access the environment variable directly
+                  console.log(import.meta.env.REACT_APP_API_KEY);
+                }}
               />
             </div>
             <div className="mb-6">
