@@ -13,7 +13,7 @@ const TechnicalSkills = () => {
   const placeholderImageURL = "https://via.placeholder.com/150";
 
   const gradientStyle = {
-    background: "linear-gradient(to bottom, #87CEFA, #87CEEB)",
+    background: "linear-gradient(to bottom, white, white)",
   };
 
   const [skillsData, setSkillsData] = useState([]);
