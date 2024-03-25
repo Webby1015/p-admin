@@ -1,6 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
+import {
+  getDocs,
+  collection,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 const AboutMe = () => {
+  const [paragraphs, setParagraphs] = useState([]);
+  const [para1, setPara1] = useState("");
+  const [para2, setPara2] = useState("");
+  const [para3, setPara3] = useState("");
+
+  const ParaRef = collection(db, "AboutMe");
+
+  const updatePara = async (id, updatedPara) => {
+    const reference = doc(db, "AboutMe", id);
+    try {
+      await updateDoc(reference, { paragraph: updatedPara });
+      getParas();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getParas = async () => {
+    try {
+      const data = await getDocs(ParaRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      filteredData.sort((a, b) => a.id - b.id);
+      setParagraphs(filteredData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getParas();
+  }, []);
+
+  const handlePara1Change = (event) => {
+    setPara1(event.target.value);
+  };
+
+  const handlePara2Change = (event) => {
+    setPara2(event.target.value);
+  };
+
+  const handlePara3Change = (event) => {
+    setPara3(event.target.value);
+  };
+
+  const handleUpdatePara1 = () => {
+    updatePara(paragraphs[0].id, para1);
+  };
+
+  const handleUpdatePara2 = () => {
+    updatePara(paragraphs[1].id, para2);
+  };
+
+  const handleUpdatePara3 = () => {
+    updatePara(paragraphs[2].id, para3);
+  };
+
   const gradientStyle = {
     background: "linear-gradient(to bottom, white, #87CEFA)",
   };
@@ -12,40 +78,67 @@ const AboutMe = () => {
       style={gradientStyle}
     >
       <h2 className="text-5xl font-bold mb-10 text-gray-900 leading-tight ">
-        <span className="">About </span><span className="font-thin bg-violet-300 rounded-full">Me</span>
+        <span className="">About </span>
+        <span className="font-thin bg-violet-300 rounded-full">Me</span>
       </h2>
 
       <p className="text-xl text-gray-700 leading-relaxed lg:mr-20 lg:ml-20 ">
-        Hello! I am Prakhar Sharma, a dedicated 3D artist with a passion for
-        creating immersive worlds and characters that tell compelling stories.
-        Proficient in a range of industry-standard tools including Autodesk
-        Maya, 3ds Max, Substance Painter, Photoshop, and ZBrush, I bring to life
-        environments that transport audiences and characters that resonate
-        deeply. My focus lies not just in crafting visually stunning scenes, but
-        in weaving narratives through intricate details, ensuring each project
-        is a journey of discovery for the viewer.
+        {paragraphs.length > 0 && paragraphs[0].paragraph}
       </p>
+      <div className="flex-row">
+        <input
+          type="text"
+          value={para1}
+          className="mx-1 p-3 mb-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          onChange={handlePara1Change}
+        />
+        <button
+          className=" bg-blue-500 hover:bg-blue-400 p-1 rounded-xl"
+          onClick={handleUpdatePara1}
+        >
+          Update
+        </button>
+      </div>
       <br />
       <p className="text-xl text-gray-700 leading-relaxed lg:mr-20 lg:ml-20 ">
-        Specializing in the creation of dynamic visual effects, I thrive on the
-        challenge of making the impossible seem tangible. Whether it's a
-        bustling futuristic cityscape or a fantastical creature brought to life,
-        I immerse myself in the process, pushing creative boundaries at every 
-        turn. Each project is an opportunity to collaborate with fellow artists
-        and creators, blending expertise and ideas to transform concepts into
-        extraordinary realities.
+        {paragraphs.length > 1 && paragraphs[1].paragraph}
       </p>
+      <div className="flex-row">
+        <input
+          type="text"
+          value={para2}
+          className="mx-1 p-3 mb-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          onChange={handlePara2Change}
+        />
+        <button
+          className=" bg-blue-500 hover:bg-blue-400 p-1 rounded-xl"
+          onClick={handleUpdatePara2}
+        >
+          Update
+        </button>
+      </div>
       <br />
       <p className="text-xl text-gray-700 leading-relaxed lg:mr-20 lg:ml-20 ">
-        With a firm belief in the power of collaboration, I eagerly seek out
-        opportunities to work with others who share a passion for storytelling
-        and visual artistry. Let's embark on a journey together, where our
-        combined vision and skills culminate in something truly extraordinary.
-        Whether it's a game, film, animation, or virtual experience, I am
-        committed to bringing our collective dreams to vivid, breathtaking life.
+        {paragraphs.length > 2 && paragraphs[2].paragraph}
       </p>
+      <div className="flex-row">
+        <input
+          type="text"
+          value={para3}
+          className="mx-1 p-3 mb-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          onChange={handlePara3Change}
+        />
+        <button
+          className=" bg-blue-500 hover:bg-blue-400 p-1 rounded-xl"
+          onClick={handleUpdatePara3}
+        >
+          Update
+        </button>
+      </div>
     </div>
   );
 };
 
 export default AboutMe;
+
+
